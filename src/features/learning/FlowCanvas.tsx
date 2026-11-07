@@ -113,7 +113,7 @@ export function FlowCanvas({ activeNodeIds, activeEdgeIds, onNodeFocus, minimap 
       proOptions={{ hideAttribution: true }}
       nodesConnectable={false}
     >
-      <Background gap={20} size={1} color="#cfdcdf" />
+      <Background gap={20} size={1} />
       <Controls showInteractive={false} />
       {minimap && <MiniMap pannable zoomable nodeColor={(n) => (n.data as ArchNodeData).fill} maskColor="rgba(23,49,61,0.08)" />}
     </ReactFlow>

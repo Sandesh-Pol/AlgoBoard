@@ -346,3 +346,24 @@ button.ab-chip { cursor: pointer; }
   .ab-present-body { grid-template-columns: 1fr; grid-template-rows: 1fr 45%; }
 }
 .react-flow__minimap { width: 140px; height: 90px; } .react-flow__minimap svg { width: 140px; height: 90px; }
+.dark {
+  --ab-ink: oklch(0.93 0.015 210);
+  --ab-ink-2: oklch(0.82 0.02 210);
+  --ab-muted: oklch(0.66 0.025 215);
+  --ab-bg: oklch(0.19 0.02 225);
+  --ab-panel: oklch(0.23 0.022 225);
+  --ab-line: oklch(0.33 0.025 222);
+  --ab-teal: oklch(0.7 0.09 182);
+  --ab-teal-soft: oklch(0.32 0.05 190);
+  --ab-deep: oklch(0.55 0.09 210);
+  --ab-active-soft: oklch(0.38 0.07 70);
+  --ab-win: oklch(0.34 0.06 165);
+  --ab-on-dark: oklch(0.97 0.01 210);
+}
+.dark .ab-pre { background: oklch(0.15 0.02 225); }
+.dark .ab-btn.is-dark { background: var(--ab-deep); border-color: var(--ab-deep); }
+.dark .ab-present-bar { background: oklch(0.15 0.02 225); }
+.dark .ab-pattern-pill, .dark .ab-type { color: var(--ab-ink); }
+.dark .react-flow__controls-button { background: var(--ab-panel); color: var(--ab-ink); border-color: var(--ab-line); fill: var(--ab-ink); }
+.dark .react-flow__minimap { background: var(--ab-panel); }
+.ab-canvas .react-flow__background { color: var(--ab-line); }

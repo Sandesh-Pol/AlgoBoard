@@ -5,7 +5,7 @@ import { toJpeg, toPng, toSvg } from "html-to-image";
 import { useServerFn } from "@tanstack/react-start";
 import {
   BookOpen, Braces, ChevronLeft, ChevronRight, Code2, Download, Eraser, FileJson, FolderOpen, GitBranch, Lightbulb, Loader2, Pause, Play,
-  Plus, Presentation, Redo2, RotateCcw, Sparkles, Trash2, Undo2, Upload, Workflow, X,
+  Moon, Plus, Presentation, Sun, Redo2, RotateCcw, Sparkles, Trash2, Undo2, Upload, Workflow, X,
 } from "lucide-react";
 import { toast } from "sonner";
 import { analyzeInput } from "@/lib/analysis/analyze.functions";
@@ -42,6 +42,15 @@ export default function Workspace() {
   const [mobileTab, setMobileTab] = useState<"left" | "center" | "right">("left");
   const [dock, setDock] = useState(true);
   const [presenting, setPresenting] = useState(false);
+  const [dark, setDark] = useState(false);
+  useEffect(() => {
+    const saved = localStorage.getItem("algoboard.theme");
+    setDark(saved ? saved === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches);
+  }, []);
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", dark);
+  }, [dark]);
+  const toggleTheme = () => { const n = !dark; setDark(n); localStorage.setItem("algoboard.theme", n ? "dark" : "light"); };
   const [loading, setLoading] = useState(false);
   const [notice, setNotice] = useState<{ kind: "clarify" | "error"; text: string } | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -159,7 +168,7 @@ export default function Workspace() {
   const exportImage = async (fmt: "png" | "jpg" | "svg") => {
     const el = document.querySelector(".ab-canvas .react-flow__viewport")?.parentElement as HTMLElement | null;
     if (!el) return;
-    const opts = { backgroundColor: "#f7fafb", pixelRatio: 2, filter: (n: HTMLElement) => !n.classList?.contains("react-flow__minimap") && !n.classList?.contains("react-flow__controls") };
+    const opts = { backgroundColor: getComputedStyle(document.documentElement).getPropertyValue("--ab-bg") || "#f7fafb", pixelRatio: 2, filter: (n: HTMLElement) => !n.classList?.contains("react-flow__minimap") && !n.classList?.contains("react-flow__controls") };
     const url = fmt === "png" ? await toPng(el, opts) : fmt === "jpg" ? await toJpeg(el, { ...opts, quality: 0.95 }) : await toSvg(el, opts);
     download(`${project.title || "algoboard"}.${fmt}`, url);
   };
@@ -293,6 +302,7 @@ export default function Workspace() {
               {(["png", "jpg", "svg"] as const).map((f) => <button key={f} className="ab-menu-item" onClick={() => exportImage(f)}>Export {f.toUpperCase()}</button>)}
             </div>
           </div>
+          <button className="ab-icon" title={dark ? "Light mode" : "Dark mode"} aria-label="Toggle dark mode" onClick={toggleTheme}>{dark ? <Sun size={15} /> : <Moon size={15} />}</button>
           <label className="ab-toggle" title="Reduced motion"><input type="checkbox" checked={reducedMotion} onChange={(e) => s.setReducedMotion(e.target.checked)} /> Reduce motion</label>
           <button className="ab-btn is-dark" onClick={() => setPresenting(true)} disabled={!project.nodes.length}><Presentation size={14} /> Present</button>
         </div>
@@ -350,7 +360,7 @@ export default function Workspace() {
               <MonacoEditor
                 height="100%"
                 language={analysis?.language === "cpp" ? "cpp" : analysis?.language || "python"}
-                theme="light"
+                theme={dark ? "vs-dark" : "light"}
                 value={analysis?.code ?? ""}
                 onMount={(ed) => { editorRef.current = ed; if (current?.sourceLine) highlightLine(current.sourceLine); }}
                 onChange={(v) => analysis && s.setProject({ analysis: { ...analysis, code: v ?? "" } })}
