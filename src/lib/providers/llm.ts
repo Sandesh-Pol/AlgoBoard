@@ -24,13 +24,13 @@ export function getProviders(env: Env): ProviderConfig[] {
   const nvidia: ProviderConfig = {
     name: "nvidia",
     apiKey: env.NVIDIA_API_KEY,
-    model: env.NVIDIA_MODEL || "meta/llama-3.3-70b-instruct",
+    model: env.NVIDIA_MODEL || "deepseek-ai/deepseek-v4.1-flash",
     url: "https://integrate.api.nvidia.com/v1/chat/completions",
   };
   const groq: ProviderConfig = {
     name: "groq",
     apiKey: env.GROQ_API_KEY,
-    model: env.GROQ_MODEL || "llama-3.3-70b-versatile",
+    model: env.GROQ_MODEL || "qwen/qwen3.8-27b",
     url: "https://api.groq.com/openai/v1/chat/completions",
   };
   const order = env.LLM_PROVIDER === "groq" ? [groq, nvidia] : [nvidia, groq];
@@ -109,7 +109,7 @@ export async function completeJson<T>(
         const msg = `${p.name}: ${(e as Error).message}`;
         errors.push(msg);
         const transient = e instanceof ProviderError ? e.transient : false;
-        if (!transient) break;
+        if (!transient && e instanceof ProviderError) break;
       }
     }
   }

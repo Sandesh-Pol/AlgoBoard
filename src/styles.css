@@ -363,6 +363,8 @@ button.ab-chip { cursor: pointer; }
 .dark .ab-pre { background: oklch(0.15 0.02 225); }
 .dark .ab-btn.is-dark { background: var(--ab-deep); border-color: var(--ab-deep); }
 .dark .ab-present-bar { background: oklch(0.15 0.02 225); }
+.dark .ab-line-active { background: oklch(0.08 0.015 225 / 92%); }
+.dark .ab-seg button, .dark .ab-seg button.active { background: oklch(0.08 0.015 225); color: var(--ab-on-dark); }
 .dark .ab-pattern-pill, .dark .ab-type { color: var(--ab-ink); }
 .dark .react-flow__controls-button { background: var(--ab-panel); color: var(--ab-ink); border-color: var(--ab-line); fill: var(--ab-ink); }
 .dark .react-flow__minimap { background: var(--ab-panel); }

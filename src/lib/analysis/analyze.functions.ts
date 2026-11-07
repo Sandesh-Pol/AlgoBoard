@@ -38,7 +38,8 @@ export const analyzeInput = createServerFn({ method: "POST" })
       if ("clarify" in result) return { ok: false, kind: "clarify", message: result.clarify!.clarification };
       return { ok: true, analysis: { ...result.analysis, requestId: crypto.randomUUID() }, provider, model };
     } catch (e) {
-      console.error("analyze failed:", (e as Error).message.slice(0, 300));
-      return { ok: false, kind: "error", message: "The AI providers could not produce a valid visualization. Please try again." };
+      const message = e instanceof Error ? e.message : "Unknown provider error";
+      console.error("analyze failed:", message.slice(0, 500));
+      return { ok: false, kind: "error", message: `AI analysis failed: ${message.slice(0, 300)}` };
     }
   });
