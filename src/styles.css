@@ -345,3 +345,4 @@ button.ab-chip { cursor: pointer; }
   .ab-dock-body { grid-template-columns: 1fr; }
   .ab-present-body { grid-template-columns: 1fr; grid-template-rows: 1fr 45%; }
 }
+.react-flow__minimap { width: 140px; height: 90px; } .react-flow__minimap svg { width: 140px; height: 90px; }
