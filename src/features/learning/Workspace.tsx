@@ -61,7 +61,7 @@ export default function Workspace() {
     setProjects(list);
     const cur = list.find((p) => p.id === localStorage.getItem(CURRENT_KEY));
     if (cur) s.loadProject(cur);
-    else s.loadProject({ ...newProject(), ...(() => { const a = EXAMPLES[0].build(); return {}; })() });
+    else loadExample(EXAMPLES[0].id);
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) s.setReducedMotion(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
