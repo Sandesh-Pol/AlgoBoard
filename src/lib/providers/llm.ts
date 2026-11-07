@@ -18,7 +18,7 @@ export class ProviderError extends Error {
   }
 }
 
-export type Env = Record<string, string | undefined>;
+export type Env = { NVIDIA_API_KEY?: string; NVIDIA_MODEL?: string; GROQ_API_KEY?: string; GROQ_MODEL?: string; LLM_PROVIDER?: string };
 
 export function getProviders(env: Env): ProviderConfig[] {
   const nvidia: ProviderConfig = {

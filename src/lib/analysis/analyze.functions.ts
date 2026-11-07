@@ -20,7 +20,7 @@ export const analyzeInput = createServerFn({ method: "POST" })
     const c = classifyInput(data.input);
     if (c.needsMoreInfo) return { ok: false, kind: "clarify", message: c.reason };
 
-    const providers = getProviders(process.env);
+    const providers = getProviders(process.env as never);
     if (!providers.length) {
       return { ok: false, kind: "error", message: "No AI provider key is configured yet. Add an NVIDIA or Groq API key to enable live analysis — the built-in examples still work." };
     }
@@ -35,7 +35,7 @@ export const analyzeInput = createServerFn({ method: "POST" })
           return { analysis: sanitizeAnalysis(analysisSchema.parse(raw)) };
         },
       );
-      if ("clarify" in result) return { ok: false, kind: "clarify", message: result.clarify.clarification };
+      if ("clarify" in result) return { ok: false, kind: "clarify", message: result.clarify!.clarification };
       return { ok: true, analysis: { ...result.analysis, requestId: crypto.randomUUID() }, provider, model };
     } catch (e) {
       console.error("analyze failed:", (e as Error).message.slice(0, 300));
